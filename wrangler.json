@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "gestao-documentos-judiciais",
+  "account_id": "1ab4f91aeb8c98325f945c9b39d20cc5",
+  "main": "./src/worker/index.ts",
+  "compatibility_date": "2025-06-17",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "upload_source_maps": true,
+  "assets": {
+    "not_found_handling": "single-page-application"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "gestao-documentos-judiciais",
+      "database_id": "9bb19773-880d-4eb7-88d3-2c21ac637bd4"
+    }
+  ]
+}
