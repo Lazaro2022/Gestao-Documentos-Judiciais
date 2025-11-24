@@ -22,6 +22,7 @@ O **SEAP** é um sistema web moderno para gerenciamento de documentos judiciais,
 ✅ **Responsáveis por Documentos**: Separação entre usuários de login e responsáveis por documentos
 ✅ **Relatórios Detalhados**: Gráficos e estatísticas de produtividade (semanal, mensal, anual)
 ✅ **Logs de Acesso**: Auditoria completa de logins e acessos ao sistema
+✅ **Backup/Restauração**: Sistema completo de exportação e importação de dados em JSON
 ✅ **Interface Moderna**: Design responsivo e intuitivo com Tailwind CSS
 ✅ **Edge Computing**: Deploy global com Cloudflare Workers (baixa latência)
 
@@ -152,8 +153,10 @@ gestao-documentos-judiciais/
 ## 📚 Documentação
 
 - **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Guia completo passo a passo para clonar e deployar o projeto
+- **[BACKUP_GUIDE.md](./BACKUP_GUIDE.md)** - Guia completo de backup e restauração de dados
 - **[CLAUDE.md](./CLAUDE.md)** - Documentação técnica para desenvolvimento com Claude Code
 - **[SISTEMA_LOGIN_IMPLEMENTACAO.md](./SISTEMA_LOGIN_IMPLEMENTACAO.md)** - Detalhes do sistema de autenticação dual
+- **[APRESENTACAO_SISTEMA_SEAP.md](./APRESENTACAO_SISTEMA_SEAP.md)** - Apresentação executiva do sistema
 
 ---
 
@@ -240,7 +243,17 @@ DELETE /api/users/:id         # Excluir usuário
 GET    /api/reports/productivity  # Relatório completo de produtividade
 ```
 
+### Backup e Restauração (Admin)
+```
+GET    /api/admin/export-backup   # Exportar todos os dados em JSON
+POST   /api/admin/import-backup   # Importar/restaurar dados de backup
+GET    /api/admin/access-logs     # Visualizar logs de acesso
+DELETE /api/admin/clear-*          # Limpeza de dados (perigoso)
+DELETE /api/admin/reset-system     # Reset completo do sistema
+```
+
 📖 Documentação completa da API: [CLAUDE.md](./CLAUDE.md#api-routes)
+📖 Guia de Backup: [BACKUP_GUIDE.md](./BACKUP_GUIDE.md)
 
 ---
 
@@ -347,6 +360,19 @@ Edite `src/shared/types.ts` para adicionar novos campos aos schemas Zod.
 - 📝 Tempo de login e logout
 - 📝 Sessões ativas/inativas
 - 📝 Auditoria completa
+
+### Backup e Restauração
+
+- 💾 Exportação completa de dados em JSON
+- 💾 Download automático de arquivo de backup
+- 💾 Importação/restauração de backup
+- 💾 6 tabelas exportadas: users, documents, document_types, document_assignees, access_logs, password_usage
+- 💾 Validação de estrutura de backup
+- 💾 Metadados incluem: data, versão, contadores
+- 💾 Portabilidade: use em sistemas clone
+- 💾 Interface simples em Configurações → Banco de Dados
+
+📖 **Guia Completo**: [BACKUP_GUIDE.md](./BACKUP_GUIDE.md)
 
 ---
 
