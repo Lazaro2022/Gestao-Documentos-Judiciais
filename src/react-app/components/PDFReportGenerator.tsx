@@ -34,10 +34,10 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
       reportElement.style.position = 'absolute';
       reportElement.style.left = '-10000px';
       reportElement.style.top = '-10000px';
-      reportElement.style.width = '900px'; // Increased width for better layout
+      reportElement.style.width = '800px'; // Optimal width for A4
       reportElement.style.backgroundColor = '#ffffff';
       reportElement.style.fontFamily = 'Arial, sans-serif';
-      reportElement.style.padding = '50px'; // More padding
+      reportElement.style.padding = '40px'; // Balanced padding
       reportElement.style.boxSizing = 'border-box';
       reportElement.style.overflow = 'visible';
       reportElement.style.overflowWrap = 'break-word'; // Modern property
@@ -57,11 +57,11 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
-        width: 900,
+        width: 800,
         height: reportElement.scrollHeight,
         scrollX: 0,
         scrollY: 0,
-        windowWidth: 900,
+        windowWidth: 800,
         windowHeight: reportElement.scrollHeight,
         logging: false,
         removeContainer: false,
@@ -72,42 +72,43 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = 210;
       const pdfHeight = 297;
-      const marginLeft = 15;
-      const marginRight = 15;
-      const marginTop = 15;
-      const marginBottom = 15;
+      const marginLeft = 10;
+      const marginRight = 10;
+      const marginTop = 10;
+      const marginBottom = 10;
 
-      const imgWidth = pdfWidth - marginLeft - marginRight; // 180mm
+      const imgWidth = pdfWidth - marginLeft - marginRight; // 190mm
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const usableHeight = pdfHeight - marginTop - marginBottom; // 267mm
+      const pageHeight = pdfHeight - marginTop - marginBottom; // 277mm
 
+      const imgData = canvas.toDataURL('image/png', 1.0);
       let heightLeft = imgHeight;
       let position = 0;
 
       // Adicionar primeira página
       pdf.addImage(
-        canvas.toDataURL('image/png', 1.0), // PNG with full quality
+        imgData,
         'PNG',
         marginLeft,
         marginTop,
         imgWidth,
         imgHeight
       );
-      heightLeft -= usableHeight;
+      heightLeft -= pageHeight;
 
       // Adicionar páginas extras se necessário
       while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
+        position = -(imgHeight - heightLeft);
         pdf.addPage();
         pdf.addImage(
-          canvas.toDataURL('image/png', 1.0),
+          imgData,
           'PNG',
           marginLeft,
           position + marginTop,
           imgWidth,
           imgHeight
         );
-        heightLeft -= usableHeight;
+        heightLeft -= pageHeight;
       }
 
       // Gerar nome do arquivo com data
@@ -153,18 +154,18 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
     return `
       <div style="font-family: 'Arial', sans-serif; color: #1f2937; line-height: 1.5; word-wrap: break-word; overflow-wrap: break-word; hyphens: auto; max-width: 100%;">
         <!-- Header -->
-        <div style="text-align: center; margin-bottom: 35px; page-break-inside: avoid;">
-          <div style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 25px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);">
-            <h1 style="margin: 0; font-size: 36px; font-weight: bold; letter-spacing: 1px; word-break: keep-all;">📊 SEAP</h1>
-            <h2 style="margin: 12px 0 0 0; font-size: 18px; opacity: 0.95; font-weight: 500; word-break: keep-all;">Sistema de Gestão de Documentos Judiciais</h2>
+        <div style="text-align: center; margin-bottom: 25px; page-break-inside: avoid; page-break-after: avoid;">
+          <div style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 3px 6px rgba(59, 130, 246, 0.3);">
+            <h1 style="margin: 0; font-size: 32px; font-weight: bold; letter-spacing: 1px; word-break: keep-all;">📊 SEAP</h1>
+            <h2 style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.95; font-weight: 500; word-break: keep-all;">Sistema de Gestão de Documentos Judiciais</h2>
           </div>
-          <h3 style="margin: 0; font-size: 24px; color: #1f2937; font-weight: bold; word-break: keep-all;">Relatório de Produtividade</h3>
-          <p style="margin: 8px 0 0 0; color: #6b7280; font-size: 14px;">Gerado em ${currentDate}</p>
+          <h3 style="margin: 0; font-size: 22px; color: #1f2937; font-weight: bold; word-break: keep-all;">Relatório de Produtividade</h3>
+          <p style="margin: 6px 0 0 0; color: #6b7280; font-size: 13px;">Gerado em ${currentDate}</p>
         </div>
 
         <!-- Resumo Executivo -->
-        <div style="background: linear-gradient(to bottom, #f8fafc, #ffffff); padding: 25px; border-radius: 12px; margin-bottom: 30px; border-left: 5px solid #3b82f6; box-shadow: 0 2px 4px rgba(0,0,0,0.08); page-break-inside: avoid;">
-          <h3 style="margin: 0 0 20px 0; color: #1f2937; font-size: 20px; font-weight: bold; word-break: keep-all;">📈 Resumo Executivo</h3>
+        <div style="background: linear-gradient(to bottom, #f8fafc, #ffffff); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #3b82f6; box-shadow: 0 2px 4px rgba(0,0,0,0.08); page-break-inside: avoid; page-break-after: avoid;">
+          <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 18px; font-weight: bold; word-break: keep-all;">📈 Resumo Executivo</h3>
           <div style="display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between;">
             <div style="text-align: center; background: white; padding: 18px; border-radius: 10px; min-width: 160px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-top: 3px solid #3b82f6;">
               <div style="font-size: 32px; font-weight: bold; color: #3b82f6; margin-bottom: 8px;">${report.totalDocuments}</div>
@@ -186,8 +187,8 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
         </div>
 
         <!-- Indicadores de Performance -->
-        <div style="background: white; padding: 25px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); page-break-inside: avoid;">
-          <h3 style="margin: 0 0 20px 0; color: #1f2937; font-size: 20px; font-weight: bold; word-break: keep-all;">🎯 Indicadores de Performance</h3>
+        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); page-break-inside: avoid; page-break-before: avoid;">
+          <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 18px; font-weight: bold; word-break: keep-all;">🎯 Indicadores de Performance</h3>
           <div style="display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between;">
             <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: 10px; border: 2px solid #0ea5e9; min-width: 220px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(14, 165, 233, 0.2);">
               <div style="font-size: 36px; font-weight: bold; color: #0369a1; margin-bottom: 8px;">${report.completionRate.toFixed(1)}%</div>
@@ -205,8 +206,8 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
         </div>
 
         <!-- Documentos por Tipo -->
-        <div style="background: white; padding: 25px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); page-break-inside: avoid;">
-          <h3 style="margin: 0 0 20px 0; color: #1f2937; font-size: 20px; font-weight: bold; word-break: keep-all;">📋 Distribuição por Tipo de Documento</h3>
+        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); page-break-inside: avoid;">
+          <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 18px; font-weight: bold; word-break: keep-all;">📋 Distribuição por Tipo de Documento</h3>
           <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: flex-start;">
             ${Object.entries(report.documentsByType).map(([type, count], index) => {
               const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316'];
@@ -228,8 +229,8 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
         </div>
 
         <!-- Ranking de Produtividade -->
-        <div style="background: white; padding: 25px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); page-break-inside: avoid;">
-          <h3 style="margin: 0 0 20px 0; color: #1f2937; font-size: 20px; font-weight: bold; word-break: keep-all;">🏆 Ranking de Produtividade dos Servidores</h3>
+        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); page-break-inside: avoid; page-break-before: auto;">
+          <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 18px; font-weight: bold; word-break: keep-all;">🏆 Ranking de Produtividade dos Servidores</h3>
           ${report.userProductivity
             .sort((a, b) => b.completedDocuments - a.completedDocuments)
             .slice(0, 10)
@@ -260,8 +261,8 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
         </div>
 
         <!-- Análise Detalhada -->
-        <div style="background: white; padding: 25px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); page-break-inside: avoid;">
-          <h3 style="margin: 0 0 20px 0; color: #1f2937; font-size: 20px; font-weight: bold; word-break: keep-all;">📊 Análise Detalhada</h3>
+        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); page-break-inside: avoid; page-break-before: auto;">
+          <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 18px; font-weight: bold; word-break: keep-all;">📊 Análise Detalhada</h3>
 
           ${topPerformer ? `
             <div style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); padding: 18px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #10b981; box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2); page-break-inside: avoid;">
@@ -298,8 +299,8 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
 
         <!-- Tendências Temporais -->
         ${report.monthlyTrends && report.monthlyTrends.length > 0 ? `
-          <div style="background: white; padding: 25px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); page-break-inside: avoid;">
-            <h3 style="margin: 0 0 20px 0; color: #1f2937; font-size: 20px; font-weight: bold; word-break: keep-all;">📅 Tendências dos Últimos Meses</h3>
+          <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); page-break-inside: avoid; page-break-before: auto;">
+            <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 18px; font-weight: bold; word-break: keep-all;">📅 Tendências dos Últimos Meses</h3>
             <div style="overflow: visible; width: 100%;">
               <table style="width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed;">
                 <thead>
@@ -332,10 +333,10 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
         ` : ''}
 
         <!-- Footer -->
-        <div style="text-align: center; margin-top: 40px; padding: 20px; background: linear-gradient(to bottom, #f9fafb, #f3f4f6); border-radius: 10px; border-top: 3px solid #3b82f6; box-shadow: 0 2px 4px rgba(0,0,0,0.08); page-break-inside: avoid;">
-          <p style="margin: 0 0 6px 0; font-weight: bold; color: #1f2937; font-size: 13px; word-break: keep-all;">SEAP - Sistema de Gestão de Documentos Judiciais</p>
-          <p style="margin: 0 0 10px 0; color: #6b7280; font-size: 12px; word-break: keep-all;">Relatório gerado automaticamente em ${currentDate}</p>
-          <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 6px; font-size: 11px; color: #6b7280; line-height: 1.5; word-wrap: break-word; border-left: 3px solid #f59e0b;">
+        <div style="text-align: center; margin-top: 30px; padding: 15px; background: linear-gradient(to bottom, #f9fafb, #f3f4f6); border-radius: 8px; border-top: 3px solid #3b82f6; box-shadow: 0 2px 4px rgba(0,0,0,0.08); page-break-inside: avoid;">
+          <p style="margin: 0 0 5px 0; font-weight: bold; color: #1f2937; font-size: 12px; word-break: keep-all;">SEAP - Sistema de Gestão de Documentos Judiciais</p>
+          <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 11px; word-break: keep-all;">Relatório gerado automaticamente em ${currentDate}</p>
+          <div style="margin-top: 8px; padding: 8px; background: white; border-radius: 6px; font-size: 10px; color: #6b7280; line-height: 1.4; word-wrap: break-word; border-left: 3px solid #f59e0b;">
             ⚠️ Este relatório contém informações confidenciais do sistema SEAP
           </div>
         </div>
