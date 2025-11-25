@@ -166,22 +166,22 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
         <!-- Resumo Executivo -->
         <div style="background: linear-gradient(to bottom, #f8fafc, #ffffff); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #3b82f6; box-shadow: 0 2px 4px rgba(0,0,0,0.08); page-break-inside: avoid; page-break-after: avoid;">
           <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 18px; font-weight: bold; word-break: keep-all;">📈 Resumo Executivo</h3>
-          <div style="display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between;">
-            <div style="text-align: center; background: white; padding: 18px; border-radius: 10px; min-width: 160px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-top: 3px solid #3b82f6;">
-              <div style="font-size: 32px; font-weight: bold; color: #3b82f6; margin-bottom: 8px;">${report.totalDocuments}</div>
-              <div style="font-size: 13px; color: #6b7280; font-weight: 500; word-break: keep-all;">Total de Documentos</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between;">
+            <div style="text-align: center; background: white; padding: 14px; border-radius: 8px; min-width: 140px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-top: 3px solid #3b82f6;">
+              <div style="font-size: 28px; font-weight: bold; color: #3b82f6; margin-bottom: 6px;">${report.totalDocuments}</div>
+              <div style="font-size: 12px; color: #6b7280; font-weight: 500; word-break: keep-all;">Total de Documentos</div>
             </div>
-            <div style="text-align: center; background: white; padding: 18px; border-radius: 10px; min-width: 160px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-top: 3px solid #10b981;">
-              <div style="font-size: 32px; font-weight: bold; color: #10b981; margin-bottom: 8px;">${report.completedDocuments}</div>
-              <div style="font-size: 13px; color: #6b7280; font-weight: 500; word-break: keep-all;">Concluídos</div>
+            <div style="text-align: center; background: white; padding: 14px; border-radius: 8px; min-width: 140px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-top: 3px solid #10b981;">
+              <div style="font-size: 28px; font-weight: bold; color: #10b981; margin-bottom: 6px;">${report.completedDocuments}</div>
+              <div style="font-size: 12px; color: #6b7280; font-weight: 500; word-break: keep-all;">Concluídos</div>
             </div>
-            <div style="text-align: center; background: white; padding: 18px; border-radius: 10px; min-width: 160px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-top: 3px solid #f59e0b;">
-              <div style="font-size: 32px; font-weight: bold; color: #f59e0b; margin-bottom: 8px;">${report.inProgressDocuments}</div>
-              <div style="font-size: 13px; color: #6b7280; font-weight: 500; word-break: keep-all;">Em Andamento</div>
+            <div style="text-align: center; background: white; padding: 14px; border-radius: 8px; min-width: 140px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-top: 3px solid #f59e0b;">
+              <div style="font-size: 28px; font-weight: bold; color: #f59e0b; margin-bottom: 6px;">${report.inProgressDocuments}</div>
+              <div style="font-size: 12px; color: #6b7280; font-weight: 500; word-break: keep-all;">Em Andamento</div>
             </div>
-            <div style="text-align: center; background: white; padding: 18px; border-radius: 10px; min-width: 160px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-top: 3px solid ${report.overdueDocuments > 0 ? '#ef4444' : '#10b981'};">
-              <div style="font-size: 32px; font-weight: bold; color: ${report.overdueDocuments > 0 ? '#ef4444' : '#10b981'}; margin-bottom: 8px;">${report.overdueDocuments}</div>
-              <div style="font-size: 13px; color: #6b7280; font-weight: 500; word-break: keep-all;">Atrasados</div>
+            <div style="text-align: center; background: white; padding: 14px; border-radius: 8px; min-width: 140px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-top: 3px solid ${report.overdueDocuments > 0 ? '#ef4444' : '#10b981'};">
+              <div style="font-size: 28px; font-weight: bold; color: ${report.overdueDocuments > 0 ? '#ef4444' : '#10b981'}; margin-bottom: 6px;">${report.overdueDocuments}</div>
+              <div style="font-size: 12px; color: #6b7280; font-weight: 500; word-break: keep-all;">Atrasados</div>
             </div>
           </div>
         </div>
@@ -189,18 +189,18 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
         <!-- Indicadores de Performance -->
         <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); page-break-inside: avoid; page-break-before: avoid;">
           <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 18px; font-weight: bold; word-break: keep-all;">🎯 Indicadores de Performance</h3>
-          <div style="display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between;">
-            <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: 10px; border: 2px solid #0ea5e9; min-width: 220px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(14, 165, 233, 0.2);">
-              <div style="font-size: 36px; font-weight: bold; color: #0369a1; margin-bottom: 8px;">${report.completionRate.toFixed(1)}%</div>
-              <div style="font-size: 14px; color: #0369a1; font-weight: 600; word-break: keep-all;">Taxa de Conclusão Geral</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between;">
+            <div style="text-align: center; padding: 16px; background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: 8px; border: 2px solid #0ea5e9; min-width: 200px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(14, 165, 233, 0.2);">
+              <div style="font-size: 30px; font-weight: bold; color: #0369a1; margin-bottom: 6px;">${report.completionRate.toFixed(1)}%</div>
+              <div style="font-size: 12px; color: #0369a1; font-weight: 600; word-break: keep-all;">Taxa de Conclusão Geral</div>
             </div>
-            <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius: 10px; border: 2px solid #22c55e; min-width: 220px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);">
-              <div style="font-size: 36px; font-weight: bold; color: #166534; margin-bottom: 8px;">${activeUsers}</div>
-              <div style="font-size: 14px; color: #166534; font-weight: 600; word-break: keep-all;">Usuários Ativos</div>
+            <div style="text-align: center; padding: 16px; background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius: 8px; border: 2px solid #22c55e; min-width: 200px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);">
+              <div style="font-size: 30px; font-weight: bold; color: #166534; margin-bottom: 6px;">${activeUsers}</div>
+              <div style="font-size: 12px; color: #166534; font-weight: 600; word-break: keep-all;">Usuários Ativos</div>
             </div>
-            <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #fefce8, #fef9c3); border-radius: 10px; border: 2px solid #eab308; min-width: 220px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(234, 179, 8, 0.2);">
-              <div style="font-size: 36px; font-weight: bold; color: #a16207; margin-bottom: 8px;">${avgCompletionRate.toFixed(1)}%</div>
-              <div style="font-size: 14px; color: #a16207; font-weight: 600; word-break: keep-all;">Taxa Média Individual</div>
+            <div style="text-align: center; padding: 16px; background: linear-gradient(135deg, #fefce8, #fef9c3); border-radius: 8px; border: 2px solid #eab308; min-width: 200px; flex: 1; box-sizing: border-box; box-shadow: 0 2px 4px rgba(234, 179, 8, 0.2);">
+              <div style="font-size: 30px; font-weight: bold; color: #a16207; margin-bottom: 6px;">${avgCompletionRate.toFixed(1)}%</div>
+              <div style="font-size: 12px; color: #a16207; font-weight: 600; word-break: keep-all;">Taxa Média Individual</div>
             </div>
           </div>
         </div>
@@ -218,10 +218,10 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
               const percentage = report.totalDocuments > 0 ? ((count / report.totalDocuments) * 100).toFixed(1) : 0;
 
               return `
-                <div style="text-align: center; padding: 16px; background: ${bgColor}; border-radius: 10px; border-left: 4px solid ${color}; min-width: 160px; flex: 1; box-sizing: border-box; max-width: 220px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
-                  <div style="font-size: 28px; font-weight: bold; color: ${color}; margin-bottom: 6px;">${count}</div>
-                  <div style="font-size: 13px; color: #374151; font-weight: 600; margin-bottom: 4px; word-break: keep-all; line-height: 1.3;">${displayName}</div>
-                  <div style="font-size: 11px; color: #6b7280; font-weight: 500;">${percentage}% do total</div>
+                <div style="text-align: center; padding: 12px; background: ${bgColor}; border-radius: 8px; border-left: 3px solid ${color}; min-width: 140px; flex: 1; box-sizing: border-box; max-width: 200px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                  <div style="font-size: 24px; font-weight: bold; color: ${color}; margin-bottom: 4px;">${count}</div>
+                  <div style="font-size: 12px; color: #374151; font-weight: 600; margin-bottom: 3px; word-break: keep-all; line-height: 1.2;">${displayName}</div>
+                  <div style="font-size: 10px; color: #6b7280; font-weight: 500;">${percentage}% do total</div>
                 </div>
               `;
             }).join('')}
@@ -242,17 +242,17 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
               const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}º`;
 
               return `
-                <div style="display: flex; align-items: center; padding: 16px; margin-bottom: 10px; background: ${bgColor}; border-radius: 10px; border-left: 4px solid ${color}; box-shadow: 0 2px 4px rgba(0,0,0,0.08); page-break-inside: avoid;">
-                  <div style="font-size: 20px; font-weight: bold; color: ${color}; margin-right: 15px; min-width: 45px; text-align: center;">${medal}</div>
+                <div style="display: flex; align-items: center; padding: 12px; margin-bottom: 8px; background: ${bgColor}; border-radius: 8px; border-left: 3px solid ${color}; box-shadow: 0 2px 4px rgba(0,0,0,0.08); page-break-inside: avoid;">
+                  <div style="font-size: 18px; font-weight: bold; color: ${color}; margin-right: 12px; min-width: 40px; text-align: center;">${medal}</div>
                   <div style="flex: 1; min-width: 0;">
-                    <div style="font-weight: bold; color: #1f2937; margin-bottom: 4px; font-size: 15px; word-wrap: break-word; overflow-wrap: break-word;">${user.userName}</div>
-                    <div style="font-size: 12px; color: #6b7280; line-height: 1.4;">
+                    <div style="font-weight: bold; color: #1f2937; margin-bottom: 3px; font-size: 14px; word-wrap: break-word; overflow-wrap: break-word;">${user.userName}</div>
+                    <div style="font-size: 11px; color: #6b7280; line-height: 1.3;">
                       <span style="font-weight: 600;">${user.completedDocuments}</span> concluídos • <span style="font-weight: 600;">${user.totalDocuments}</span> total • <span style="font-weight: 600;">${user.completionRate.toFixed(1)}%</span> taxa
                     </div>
                   </div>
-                  <div style="text-align: right; margin-left: 12px;">
-                    <div style="font-size: 20px; font-weight: bold; color: #10b981;">${user.completedDocuments}</div>
-                    <div style="font-size: 10px; color: #6b7280; font-weight: 500; word-break: keep-all;">documentos</div>
+                  <div style="text-align: right; margin-left: 10px;">
+                    <div style="font-size: 18px; font-weight: bold; color: #10b981;">${user.completedDocuments}</div>
+                    <div style="font-size: 9px; color: #6b7280; font-weight: 500; word-break: keep-all;">documentos</div>
                   </div>
                 </div>
               `;
