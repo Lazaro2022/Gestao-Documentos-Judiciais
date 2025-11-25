@@ -68,47 +68,67 @@ export default function PDFReportGenerator({ report }: PDFReportGeneratorProps) 
         imageTimeout: 0
       });
 
-      // Criar PDF com margens adequadas
+      // Criar PDF com slicing do canvas para múltiplas páginas
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = 210;
       const pdfHeight = 297;
-      const marginLeft = 10;
-      const marginRight = 10;
-      const marginTop = 10;
-      const marginBottom = 10;
+      const marginX = 10; // margem lateral
+      const marginTop = 15; // margem superior maior
+      const marginBottom = 20; // margem inferior maior (segurança)
 
-      const imgWidth = pdfWidth - marginLeft - marginRight; // 190mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const pageHeight = pdfHeight - marginTop - marginBottom; // 277mm
+      const usableWidth = pdfWidth - (marginX * 2); // 190mm
+      const usableHeight = pdfHeight - marginTop - marginBottom; // 262mm (com margem de segurança)
 
-      const imgData = canvas.toDataURL('image/png', 1.0);
-      let heightLeft = imgHeight;
-      let position = 0;
+      // Calcular proporções
+      const ratio = canvas.width / usableWidth;
+      const canvasPageHeight = usableHeight * ratio; // altura do canvas por página
 
-      // Adicionar primeira página
-      pdf.addImage(
-        imgData,
-        'PNG',
-        marginLeft,
-        marginTop,
-        imgWidth,
-        imgHeight
-      );
-      heightLeft -= pageHeight;
+      // Margem de segurança no canvas (evitar corte no limite)
+      const safetyMargin = 20 * ratio; // 20mm de segurança convertido para pixels do canvas
+      const effectiveCanvasPageHeight = canvasPageHeight - safetyMargin;
 
-      // Adicionar páginas extras se necessário
-      while (heightLeft > 0) {
-        position = -(imgHeight - heightLeft);
-        pdf.addPage();
-        pdf.addImage(
-          imgData,
-          'PNG',
-          marginLeft,
-          position + marginTop,
-          imgWidth,
-          imgHeight
+      const totalPages = Math.ceil(canvas.height / effectiveCanvasPageHeight);
+
+      for (let page = 0; page < totalPages; page++) {
+        if (page > 0) {
+          pdf.addPage();
+        }
+
+        // Criar canvas temporário para esta página
+        const pageCanvas = document.createElement('canvas');
+        const pageCtx = pageCanvas.getContext('2d');
+
+        if (!pageCtx) continue;
+
+        // Definir tamanho do canvas da página
+        pageCanvas.width = canvas.width;
+        const startY = page * effectiveCanvasPageHeight;
+        const remainingHeight = canvas.height - startY;
+        pageCanvas.height = Math.min(effectiveCanvasPageHeight, remainingHeight);
+
+        // Preencher fundo branco
+        pageCtx.fillStyle = '#ffffff';
+        pageCtx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+
+        // Copiar a porção do canvas original
+        pageCtx.drawImage(
+          canvas,
+          0, startY, canvas.width, pageCanvas.height,
+          0, 0, canvas.width, pageCanvas.height
         );
-        heightLeft -= pageHeight;
+
+        // Calcular altura proporcional para o PDF
+        const pageImgHeight = (pageCanvas.height / canvas.width) * usableWidth;
+
+        // Adicionar ao PDF
+        pdf.addImage(
+          pageCanvas.toDataURL('image/png', 1.0),
+          'PNG',
+          marginX,
+          marginTop,
+          usableWidth,
+          pageImgHeight
+        );
       }
 
       // Gerar nome do arquivo com data
