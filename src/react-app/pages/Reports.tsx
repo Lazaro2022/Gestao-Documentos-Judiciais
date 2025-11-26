@@ -3,12 +3,11 @@ import Layout from '@/react-app/components/Layout';
 import StatCard from '@/react-app/components/StatCard';
 import UserProductivityCard from '@/react-app/components/UserProductivityCard';
 import PDFReportGenerator from '@/react-app/components/PDFReportGenerator';
-import { 
-  WeeklyChart, 
-  MonthlyChart, 
-  AnnualChart, 
-  DocumentTypesChart, 
-  ComparisonChart 
+import {
+  WeeklyChart,
+  MonthlyChart,
+  AnnualChart,
+  DocumentTypesChart
 } from '@/react-app/components/ProductivityCharts';
 import { useProductivityReport } from '@/react-app/hooks/useProductivityReport';
 import { useEffect, useState } from 'react';
@@ -214,17 +213,6 @@ export default function Reports() {
 
         {activeTab === 'charts' && (
           <>
-            {/* Comparison Chart */}
-            {report.weeklyTrends && report.monthlyTrends && report.annualTrends && (
-              <div className="mb-6">
-                <ComparisonChart 
-                  weeklyData={report.weeklyTrends}
-                  monthlyData={report.monthlyTrends}
-                  annualData={report.annualTrends}
-                />
-              </div>
-            )}
-
             {/* Charts Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
               {/* Weekly Chart */}
